@@ -13,7 +13,7 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-      <h1 class="mx-5" >{{name.username}}    </h1>
+      <h1 class="mx-5">{{name.username}} </h1>
 
       <a class="navbar-brand" href="{% url 'profile' %}">LinkedIn</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -44,9 +44,9 @@
             <a class="nav-link " aria-current="page" href="{% url 'viewprofile' %}">ViewProfile</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link active" aria-current="page" href="{% url 'chat' %}">Chat</a>
+            <a class="nav-link" aria-current="page" href="{% url 'chat' %}">Chat</a>
           </li>
-         
+
 
 
         </ul>
@@ -58,16 +58,18 @@
   </nav>
 
 
-
+<form action="{% url 'addpost' %}"method="post">
+  {%csrf_token%}
   <div class="my-5 d-flex justify-content-center">
     <h3>User Posts</h3>
+    <button type="submit" class="b btn-outline-success mx-2">Add Post</button>
   </div>
-
+</form>
   <table class="table table-striped container my-5">
     <thead>
       <tr>
 
-        <th scope="col">Username</th>
+        <th scope="col">Post author</th>
         <th scope="col">Post</th>
         <th scope="col">Date</th>
 

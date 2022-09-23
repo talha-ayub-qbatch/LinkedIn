@@ -12,6 +12,9 @@ urlpatterns = [
     path('connection/', views.connection, name='connection'),
     path('viewprofile/', views.viewprofile, name='viewprofile'),
     path('chat/', views.chat, name='chat'),
+    path('friends/', views.friends, name='friends'),
+    path('addpost/', views.AddPost.as_view(), name='addpost'),
+    path('addcomment/', views.AddComment.as_view(), name='addcomment'),
     path('logout/', views.Logout.as_view(), name='logout'),
 
 ]

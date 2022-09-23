@@ -58,17 +58,21 @@
 
 
 
-  <div class="my-5 d-flex justify-content-center">
-    <h3>User Comment</h3>
-  </div>
+  <form action="{% url 'addcomment' %}"method="post">
+    {%csrf_token%}
+    <div class="my-5 d-flex justify-content-center">
+      <h3>User Comments</h3>
+      <button type="submit" class="b btn-outline-success mx-2">Add Comment</button>
+    </div>
+  </form>
 
   <table class="table table-striped container my-5">
     <thead>
       <tr>
 
         <th scope="col">Post</th>
-        <th scope="col">Username</th>
-        <th scope="col">text</th>
+        <th scope="col">comment author</th>
+        <th scope="col">Comment</th>
         <th scope="col">Date</th>
       </tr>
     </thead>

@@ -4,3 +4,4 @@ from .models import *
 
 class UserForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea)
+

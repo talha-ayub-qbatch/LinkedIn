@@ -3,7 +3,7 @@ from django.shortcuts import render
 from .models import *
 from django.http import HttpResponse
 from django.views.generic.base import TemplateView, RedirectView
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView,CreateView
 from .forms import UserForm
 # Create your views here.
 
@@ -50,7 +50,8 @@ def post(request):
     '''
     current_user = request.user
     current_user_name = User.objects.get(pk=current_user.pk)
-    current_user_pk = Post.objects.filter(user=current_user.pk)
+    current_user_all = User.objects.all()
+    current_user_pk = Post.objects.filter(user__in=current_user_all)
     return render(request, "registration/post.html", {'user': current_user_pk, 'name': current_user_name})
 
 
@@ -62,7 +63,7 @@ def comment(request):
     '''
     current_user = request.user
     current_user_name = User.objects.get(pk=current_user.pk)
-    current_user_pk = Post.objects.filter(user=current_user.pk)
+    current_user_pk = Post.objects.all()
     current_user_post_comment = Comment.objects.filter(
         post__in=current_user_pk)
     return render(request, "registration/comment.html", {'user': current_user_post_comment, 'name': current_user_name})
@@ -123,9 +124,29 @@ def chat(request):
     current_user_pk = Chat.objects.all()
     return render(request, "registration/chat.html", {'user': current_user_pk, 'form': my_form, 'id': current_user_name, 'name': current_user_names})
 
+def friends(request):
+    current_user = request.user
+    connected_user = Connection.objects.get(primary_user = current_user.pk)
+    connected_secondary_user = connected_user.secondary_user
+    print(connected_secondary_user.username)
+    return render(request, "registration/friends.html", {'user': connected_secondary_user, 'profile':current_user})
+
+
 
 class Logout(RedirectView):
     '''
     This class is used for logout the user and redirect it login page
     '''
     url = 'http://127.0.0.1:8000/accounts/login/'
+
+class AddPost(CreateView):
+    model = Post
+    fields = ['user', 'text']
+    template_name = 'registration/addpost.html' 
+    success_url = '/accounts/post/'
+
+class AddComment(CreateView):
+    model = Comment
+    fields = ['post', 'user', 'text']
+    template_name = 'registration/addcomment.html' 
+    success_url = '/accounts/comment/'
