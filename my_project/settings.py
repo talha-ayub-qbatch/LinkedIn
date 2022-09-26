@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-81!0lduye4x0d#+-)3tjosw%mbi2j6+loa-j2kxppzoe=iy!c+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://linkedin-app-heroku.herokuapp.com/',]
+ALLOWED_HOSTS = ['https://linkedin-app-heroku.herokuapp.com/','localhost',]
 
 
 
@@ -126,13 +126,36 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_URL = 'static/'
+
+
 # STATICFILES_DIRS = [
-#     BASE_DIR / "static",
-#     'my_project/static',
-# ]
-STATICFILES_DIRS = [BASE_DIR / 'static', ]
+#             BASE_DIR / 'static',
+#                     ]
+# MEDIA_URL = 'images/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+
+# STATIC_ROOT = '/Users/macbook-727/Documents/Django_project/my_project/linkedin-app-heroku/static'
+# STATIC_URL = '/static/'
+# # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# MEDIA_ROOT = os.path.join(BASE_DIR, '/static/')
+# # STATICFILES_DIRS = [
+# #     BASE_DIR / "static",
+# #     'my_project/static',
+# # ]
+# STATICFILES_DIRS = [BASE_DIR / 'static', ]
+
+
+STATIC_URL = 'static/'
+
+
+STATICFILES_DIRS = [
+            BASE_DIR / 'static',
+                    ]
+MEDIA_URL = 'images/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
