@@ -1,4 +1,5 @@
 
+from audioop import reverse
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.fields import GenericForeignKey
@@ -25,6 +26,9 @@ class User(AbstractUser):
         'User', through='ViewProfile', related_name='users_view')
     users = models.ManyToManyField(
         'User', through='Chat', related_name='users_chat')
+
+    def get_absolute_url(self):
+        return reverse
 
     def __str__(self):
         return self.username
@@ -78,7 +82,7 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='user_comment', null=True)
-    date = models.DateField(verbose_name='Comment Date', auto_now=True)
+    date = models.DateTimeField(verbose_name='Comment Date', auto_now=True)
     text = models.TextField(max_length=1000)
     likes = GenericRelation('Like')
 

@@ -4,6 +4,7 @@ from .models import *
 from django.http import HttpResponse
 from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic.edit import FormView,CreateView
+from django.views.generic.detail import DetailView
 from .forms import UserForm
 # Create your views here.
 
@@ -49,9 +50,13 @@ def post(request):
     in which the user's all posts is shown on the screen.
     '''
     current_user = request.user
+
     current_user_name = User.objects.get(pk=current_user.pk)
     current_user_all = User.objects.all()
     current_user_pk = Post.objects.filter(user__in=current_user_all)
+    print(current_user_pk[1].pk)
+    likes = Like.objects.filter(object_id = current_user_pk[1].pk)
+    print(likes)
     return render(request, "registration/post.html", {'user': current_user_pk, 'name': current_user_name})
 
 
@@ -127,7 +132,10 @@ def chat(request):
 def friends(request):
     current_user = request.user
     connected_user = Connection.objects.get(primary_user = current_user.pk)
-    connected_secondary_user = connected_user.secondary_user
+    if connected_user.status == True:
+        connected_secondary_user = connected_user.secondary_user
+    else:    
+        connected_secondary_user = ''
     print(connected_secondary_user.username)
     return render(request, "registration/friends.html", {'user': connected_secondary_user, 'profile':current_user})
 
@@ -150,3 +158,6 @@ class AddComment(CreateView):
     fields = ['post', 'user', 'text']
     template_name = 'registration/addcomment.html' 
     success_url = '/accounts/comment/'
+
+class UserDetail(DetailView):
+    model = User
