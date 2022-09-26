@@ -145,7 +145,7 @@ class Logout(RedirectView):
     '''
     This class is used for logout the user and redirect it login page
     '''
-    url = 'http://127.0.0.1:8000/accounts/login/'
+    url = '/accounts/login/'
 
 class AddPost(CreateView):
     model = Post
