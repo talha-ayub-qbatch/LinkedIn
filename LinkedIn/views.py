@@ -115,12 +115,12 @@ def chat(request):
         my_form = UserForm()
 
     if current_user.pk == 1:
-        receiver = User.objects.get(pk=3)
+        receiver = User.objects.get(pk=2)
         sender = User.objects.get(pk=current_user.pk)
         Chat.objects.create(receiver=receiver, sender=sender, text=get_msg)
-        current_user_name = User.objects.get(pk=3)
+        current_user_name = User.objects.get(pk=2)
 
-    elif current_user.pk == 3:
+    elif current_user.pk == 2:
         receiver = User.objects.get(pk=1)
         sender = User.objects.get(pk=current_user.pk)
         Chat.objects.create(receiver=receiver, sender=sender, text=get_msg)
