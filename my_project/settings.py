@@ -157,16 +157,14 @@ USE_TZ = True
 # STATICFILES_DIRS = [BASE_DIR / 'static', ]
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/admin')
+STATIC_URL = '/static/admin'
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-MEDIA_URL = 'images/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 
 # Default primary key field type
