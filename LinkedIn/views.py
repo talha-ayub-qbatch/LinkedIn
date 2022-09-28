@@ -6,6 +6,7 @@ from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic.edit import FormView,CreateView
 from django.views.generic.detail import DetailView
 from .forms import UserForm
+from django.db.models import Q
 # Create your views here.
 
 
@@ -98,7 +99,7 @@ def viewprofile(request):
     return render(request, "registration/viewprofile.html", {'user': current_user_pk, 'name': current_user_name})
 
 
-def chat(request):
+def whichuserchat(request,id):
     '''
     This function get the request on 'chat/' and response the chat.html page 
 
@@ -114,20 +115,25 @@ def chat(request):
     else:
         my_form = UserForm()
 
-    if current_user.pk == 1:
-        receiver = User.objects.get(pk=2)
-        sender = User.objects.get(pk=current_user.pk)
-        Chat.objects.create(receiver=receiver, sender=sender, text=get_msg)
-        current_user_name = User.objects.get(pk=2)
 
-    elif current_user.pk == 2:
-        receiver = User.objects.get(pk=1)
-        sender = User.objects.get(pk=current_user.pk)
-        Chat.objects.create(receiver=receiver, sender=sender, text=get_msg)
-        current_user_name = User.objects.get(pk=1)
+    receiver1 = User.objects.get(pk=id)
+    sender1 = User.objects.get(pk=current_user.pk)
+    Chat.objects.create(receiver=receiver1, sender=sender1, text=get_msg)
+    receiver_user_name = User.objects.get(pk=id)
+    print(receiver_user_name)
+    current_user_pk = Chat.objects.filter(Q(receiver=id ,sender=current_user.pk) | Q(receiver=current_user.pk ,sender=id)).exclude(text = 'Connection made')
+    return render(request, "registration/chat.html", {'user': current_user_pk, 'form': my_form, 'id': receiver_user_name, 'name': current_user_names})
 
-    current_user_pk = Chat.objects.all()
-    return render(request, "registration/chat.html", {'user': current_user_pk, 'form': my_form, 'id': current_user_name, 'name': current_user_names})
+
+def chat(request):
+    '''
+    This function is used to select the user for chat
+    '''
+    current_user = request.user
+    all_users = User.objects.all().exclude(pk = current_user.pk)
+    return render(request, "registration/whichuserchat.html",{'user':all_users,'name':current_user})
+
+
 
 def friends(request):
     current_user = request.user
@@ -148,6 +154,7 @@ class Logout(RedirectView):
     url = '/accounts/login/'
 
 class AddPost(CreateView):
+    
     model = Post
     fields = ['user', 'text']
     template_name = 'registration/addpost.html' 

@@ -23,7 +23,7 @@ env = environ.Env(
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -33,7 +33,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-81!0lduye4x0d#+-)3tjosw%mbi2j6+loa-j2kxppzoe=iy!c+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['linkedin-app-heroku.herokuapp.com','localhost','127.0.0.1',]
 
@@ -100,8 +100,18 @@ WSGI_APPLICATION = 'my_project.wsgi.application'
 #     }
 # }
 
-import dj_database_url
-DATABASES = {'default': dj_database_url.config()}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASS'),
+        'HOST': env('DATABASE_HOST'),
+        'PORT': env('DATABASE_PORT'),
+    }
+}
+# import dj_database_url
+# DATABASES = {'default': dj_database_url.config()}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -157,7 +167,7 @@ USE_TZ = True
 # STATICFILES_DIRS = [BASE_DIR / 'static', ]
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/admin/')
 STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
