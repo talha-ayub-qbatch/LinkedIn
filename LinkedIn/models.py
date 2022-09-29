@@ -27,9 +27,6 @@ class User(AbstractUser):
     users = models.ManyToManyField(
         'User', through='Chat', related_name='users_chat')
 
-    def get_absolute_url(self):
-        return reverse
-
     def __str__(self):
         return self.username
 
@@ -140,5 +137,14 @@ class Chat(models.Model):
         User, related_name='receiver', on_delete=models.CASCADE, null=True)
     sender = models.ForeignKey(
         User, related_name='sender', on_delete=models.CASCADE, null=True)
+    date = models.DateTimeField(verbose_name='Message Date', auto_now=True)
+    text = models.TextField(max_length=1000)
+
+class GroupChat(models.Model):
+    '''
+    This class is used for Group chatting
+    '''
+    sender = models.ForeignKey(
+        User, related_name='group', on_delete=models.CASCADE, null=True)
     date = models.DateTimeField(verbose_name='Message Date', auto_now=True)
     text = models.TextField(max_length=1000)

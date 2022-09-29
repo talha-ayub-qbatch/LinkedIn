@@ -44,15 +44,17 @@
             </tr>
         </thead>
         <tbody>
+            {% for users in user %}
             <tr>
-                <td>{{user.username}}</td>
-                <td>{{user.age}}</td>
-                <td>{{user.email}}</td>
-                <td>{{user.mobile}}</td>
-                <td>{{user.address}}</td>
-                <td><a href="{{user.website}}">{{user.website}}</a></td>
-                <td>{{user.headlines}}</td>
+                <td>{{users.username}}</td>
+                <td>{{users.age}}</td>
+                <td>{{users.email}}</td>
+                <td>{{users.mobile}}</td>
+                <td>{{uusersser.address}}</td>
+                <td><a href="{{users.website}}">{{users.website}}</a></td>
+                <td>{{users.headlines}}</td>
             </tr>
+            {% endfor %}
         </tbody>
     </table>
 </body>

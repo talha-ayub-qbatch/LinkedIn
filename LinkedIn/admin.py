@@ -1,12 +1,22 @@
 from django.contrib import admin
 from .models import *
 
+from django.contrib.auth.admin import UserAdmin as OrigUserAdmin
+
+
+
+
+
 # Register your models here.
 
 
 @admin.register(Chat)
 class ChatAdmin(admin.ModelAdmin):
     list_display = ['receiver', 'sender', 'date', 'text']
+
+@admin.register(GroupChat)
+class GroupChatAdmin(admin.ModelAdmin):
+    list_display = ['sender', 'date', 'text']
 
 
 @admin.register(ViewProfile)
@@ -46,6 +56,9 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(OrigUserAdmin):
     list_display = ['username', 'age', 'email', 'password', 'is_staff',
                     'mobile', 'address', 'website', 'profile_pic', 'about', 'headlines']
+
+
+

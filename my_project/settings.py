@@ -167,7 +167,7 @@ USE_TZ = True
 # STATICFILES_DIRS = [BASE_DIR / 'static', ]
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/admin')
 STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
